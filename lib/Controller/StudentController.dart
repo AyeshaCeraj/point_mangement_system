@@ -36,11 +36,15 @@ class Studentcontroller extends GetxController {
 
     if (pickedDate != null) {
       dateController.text = DateFormat('dd/MM/yyyy').format(pickedDate!);
+      print("Selected Date: ${dateController.text}");
+
     }
   }
 
   @override
   void onInit() {
+    print("Controller Started");
+
     getRoute();
     super.onInit();
   }
@@ -57,6 +61,7 @@ class Studentcontroller extends GetxController {
       print("error $e");
     }
   }
+
 
   Future<File?> convertToJpg(File image) async {
     final ressult = await FlutterImageCompress.compressAndGetFile(
@@ -82,6 +87,7 @@ class Studentcontroller extends GetxController {
 
   Future<void> uploadData() async {
     final jpgImage = await convertToJpg(selectedImage.value!);
+
     DateTime dob = DateFormat("dd/MM/yyyy").parse(dateController.text);
 
     if (jpgImage == null) return;
@@ -113,15 +119,27 @@ class Studentcontroller extends GetxController {
 
       print(response.data);
       print("message ${data["message"]}");
+      if(data["success"] == true){
+        Get.snackbar("Success", "${data["message"]}");
+      }
+      clear();
     } catch (e) {
       print("error $e");
     }
   }
 
-  void check() {
-    print(nameController.text);
-    print(addressController.text);
-    print(dateController.text);
-    print(phoneController.text);
+  void clear() {
+    nameController.clear();
+    dateController.clear();
+    cnicController.clear();
+    phoneController.clear();
+    addressController.clear();
+    departmentController.clear();
+
+    selectedImage.value = null;
+    selectedGender.value = null;
+    selectedSemester.value = null;
+    selectedRouteId.value =null;
+
   }
 }

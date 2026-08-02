@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:point_mangement_system/point_route_details.dart';
 import 'package:point_mangement_system/signUp.dart';
 import 'package:point_mangement_system/std_form.dart';
-import 'package:point_mangement_system/studentForm.dart';
 
+import 'Schedule.dart';
 import 'SplashScreen.dart';
 import 'login.dart';
 
@@ -29,9 +30,9 @@ class _MyAppState extends State<MyApp> {
           textSelectionTheme: TextSelectionThemeData(
             cursorColor: Colors.black,
             selectionHandleColor: Colors.grey,
-            selectionColor: Colors.black
+            selectionColor: Color.fromRGBO(227, 228, 227, 0.8)
           )
         ),
-        home: StudentForm());
+        home: RouteSchedule());
   }
 }
