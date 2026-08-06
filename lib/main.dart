@@ -7,6 +7,8 @@ import 'package:point_mangement_system/std_form.dart';
 
 import 'Schedule.dart';
 import 'SplashScreen.dart';
+import 'DisplayScreens/driverDetail.dart';
+import 'UpdateScreens/driverUpdateForm.dart';
 import 'login.dart';
 
 void main() {
@@ -26,13 +28,13 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
         theme: ThemeData(
 
-          fontFamily: "Lato",
-          textSelectionTheme: TextSelectionThemeData(
-            cursorColor: Colors.black,
-            selectionHandleColor: Colors.grey,
-            selectionColor: Color.fromRGBO(227, 228, 227, 0.8)
-          )
+            fontFamily: "Lato",
+            textSelectionTheme: TextSelectionThemeData(
+                cursorColor: Colors.black,
+                selectionHandleColor: Colors.grey,
+                selectionColor: Color.fromRGBO(227, 228, 227, 0.8)
+            )
         ),
-        home: RouteSchedule());
+        home: Driverdetail());
   }
 }
