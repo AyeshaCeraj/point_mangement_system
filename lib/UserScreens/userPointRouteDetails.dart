@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 
-import 'Controller/routeDetailController.dart';
+import '../Controller/User/routeDetailController.dart';
 
 class routeDetails extends StatefulWidget {
   const routeDetails({super.key});
@@ -14,12 +14,12 @@ class routeDetails extends StatefulWidget {
 }
 
 class _routeDetailsState extends State<routeDetails> {
-  RoutedetaiController routeDetaiController = Get.put(RoutedetaiController());
+  final routeDetaiController = Get.find<RoutedetaiController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Select Route")),
+      appBar: AppBar(title: Text("Routes"),centerTitle: true,),
 
       body: Obx(
         () => routeDetaiController.pointRouteData.isEmpty
@@ -36,6 +36,7 @@ class _routeDetailsState extends State<routeDetails> {
                           elevation: 4,
                           shadowColor: Color.fromRGBO(1, 1, 1, 1),
                           margin: EdgeInsets.all(18),
+                          color: Color.fromRGBO(232, 245, 233, 1.0),
                           child: Padding(
                             padding: const EdgeInsets.all(18.0),
                             child: Column(

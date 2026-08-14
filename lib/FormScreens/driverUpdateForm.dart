@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../Controller/driverUpdateController.dart';
+import '../Controller/Admin/driverUpdateController.dart';
 
 class Driverupdateform extends StatefulWidget {
   final String id;
@@ -28,7 +28,7 @@ class Driverupdateform extends StatefulWidget {
 }
 
 class _DriverupdateformState extends State<Driverupdateform> {
-  Driverupdatecontroller driverupdatecontroller = Driverupdatecontroller();
+   final driverupdatecontroller = Get.find<Driverupdatecontroller>();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -62,7 +62,17 @@ class _DriverupdateformState extends State<Driverupdateform> {
         child: Form(
           key: _formKey,
 
-          child: Obx(()  => driverupdatecontroller.isLoading.value ? CircularProgressIndicator(): Column(
+          child: Obx(()  => driverupdatecontroller.isLoading.value ? SizedBox(
+            height: Get.height,
+            width: Get.width,
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                backgroundColor: Colors.green,
+              ),
+            ),
+          )
+              : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(

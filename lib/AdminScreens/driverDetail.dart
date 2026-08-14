@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../Controller/DriverDetailController.dart';
-import '../UpdateScreens/driverUpdateForm.dart';
+import '../Controller/Admin/AdminDriverController.dart';
+import '../FormScreens/driverUpdateForm.dart';
 
 class Driverdetail extends StatefulWidget {
   const Driverdetail({super.key});
@@ -12,9 +12,7 @@ class Driverdetail extends StatefulWidget {
 }
 
 class _DriverdetailState extends State<Driverdetail> {
-  Driverdetailcontroller driverdetailcontroller = Get.put(
-    Driverdetailcontroller(),
-  );
+  final driverdetailcontroller = Get.find<Driverdetailcontroller>();
 
   String initials(String name) {
     List<String> words = name.trim().split(" ");
@@ -292,23 +290,23 @@ class CardDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () async{
-                        final result = await Get.to(
-                          () => Driverupdateform(
-                            id: id,
-                            cnic: cnic,
-                            name: name,
-                            phone_number: phone_number,
-                            familyContact: familyContact,
-                            address: address,
-                            salary: salary,
-                          ),
-
+                      onPressed: () async {
+                        final result = await Get.toNamed(
+                          '/driverUpdate',
+                          arguments: {
+                            'id': id,
+                            'cnic': cnic,
+                            'name': name,
+                            'phone_number': phone_number,
+                            'familyContact': familyContact,
+                            'address': address,
+                            'salary': salary,
+                          },
                         );
+
                         if (result == true) {
                           Drivercontroller.getData();
                         }
-
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: const Color.fromRGBO(

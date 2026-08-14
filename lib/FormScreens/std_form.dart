@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart' hide FormData;
 
-import 'Controller/StudentController.dart';
+import '../Controller/User/StudentController.dart';
+
 
 class StudentForm extends StatefulWidget {
   const StudentForm({super.key});
@@ -18,7 +19,7 @@ class _StudentFormState extends State<StudentForm> {
   );
   final _formKey = GlobalKey<FormState>();
 
-  Studentcontroller std_controller = Get.put(Studentcontroller());
+   final std_controller = Get.find<Studentcontroller>();
 
 
   @override

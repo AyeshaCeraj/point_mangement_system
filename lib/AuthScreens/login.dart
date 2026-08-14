@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:point_mangement_system/signUp.dart';
+import 'package:point_mangement_system/AuthScreens/signUp.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

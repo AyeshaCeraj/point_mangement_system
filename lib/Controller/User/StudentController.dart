@@ -52,7 +52,7 @@ class Studentcontroller extends GetxController {
   Future<void> getRoute() async {
     try {
       var result = await Dio().get(
-        "http://192.168.1.7/point_mangement_system/getRoute.php",
+        "http://192.168.1.12/point_mangement_system/getRoute.php",
       );
       location.addAll(jsonDecode(result.data));
 
@@ -109,7 +109,7 @@ class Studentcontroller extends GetxController {
       });
 
       final response = await Dio().post(
-        "http://192.168.1.7/point_mangement_system/addStudent.php",
+        "http://192.168.1.12/point_mangement_system/addStudent.php",
         data: formData,
       );
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'Controller/scheduleController.dart';
+import '../Controller/User/scheduleController.dart';
 
 class RouteSchedule extends StatefulWidget {
   const RouteSchedule({super.key});
@@ -11,7 +11,7 @@ class RouteSchedule extends StatefulWidget {
 }
 
 class _RouteScheduleState extends State<RouteSchedule> {
-  ScheduleController scheduleController = Get.put(ScheduleController());
+  final scheduleController = Get.find<ScheduleController>();
 
   @override
   Widget build(BuildContext context) {

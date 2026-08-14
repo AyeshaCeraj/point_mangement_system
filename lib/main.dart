@@ -1,15 +1,27 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:point_mangement_system/point_route_details.dart';
-import 'package:point_mangement_system/signUp.dart';
-import 'package:point_mangement_system/std_form.dart';
+import 'package:point_mangement_system/AuthScreens/signUp.dart';
+import 'package:point_mangement_system/FormScreens/std_form.dart';
+import 'package:point_mangement_system/UserScreens/userPointRouteDetails.dart';
 
-import 'Schedule.dart';
+import 'AdminScreens/driverDetail.dart';
+import 'AdminScreens/pointDetails.dart';
+import 'AdminScreens/routeDetails.dart';
+import 'Binding/Admin/AdminDriverBinding.dart';
+import 'Binding/Admin/AdminPointBinding.dart';
+import 'Binding/Admin/AdminRouteBinding.dart';
+import 'Binding/Admin/DriverUpdateBinding.dart';
+import 'Binding/Admin/RouteUpdateBinding.dart';
+import 'Binding/User/UserRouteDisplayBinding.dart';
+import 'Binding/User/scheduelBinding.dart';
+import 'Binding/User/studentFormBinding.dart';
+import 'FormScreens/RouteUpdate.dart';
+import 'FormScreens/pointUpdateForm.dart';
+import 'UserScreens/Schedule.dart';
 import 'SplashScreen.dart';
-import 'DisplayScreens/driverDetail.dart';
-import 'UpdateScreens/driverUpdateForm.dart';
-import 'login.dart';
+import '../FormScreens/driverUpdateForm.dart';
+import 'AuthScreens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,15 +38,87 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        theme: ThemeData(
-
-            fontFamily: "Lato",
-            textSelectionTheme: TextSelectionThemeData(
-                cursorColor: Colors.black,
-                selectionHandleColor: Colors.grey,
-                selectionColor: Color.fromRGBO(227, 228, 227, 0.8)
-            )
+      theme: ThemeData(
+        fontFamily: "Lato",
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.black,
+          selectionHandleColor: Colors.grey,
+          selectionColor: Color.fromRGBO(227, 228, 227, 0.8),
         ),
-        home: Driverdetail());
+      ),
+      initialRoute: '/point',
+
+      getPages: [
+        GetPage(
+          name: '/driver',
+          page: () => Driverdetail(),
+          binding: adminDriverBinding(),
+        ),
+        GetPage(
+          name: '/driverUpdate',
+          page: () => Driverupdateform(
+            id: Get.arguments['id'],
+            cnic: Get.arguments['cnic'],
+            name: Get.arguments['name'],
+            phone_number: Get.arguments['phone_number'],
+            familyContact: Get.arguments['familyContact'],
+            address: Get.arguments['address'],
+            salary: Get.arguments['salary'],
+          ),
+          binding: driverUpdateBinding(),
+        ),
+        GetPage(
+          name: '/AdminRoute',
+          page: () => AdminRoutedetail(),
+          binding: AdminRouteBinding(),
+        ),
+        GetPage(
+          name: "/RouteUpdate",
+          page: () => RouteUpdateForm(
+            name: Get.arguments['name'],
+            fees: Get.arguments['fees'],
+            total_distance: Get.arguments['total_distance'],
+            id: Get.arguments['id'],
+          ),
+          binding: RouteUpdateBinding(),
+        ),
+        GetPage(
+          name: "/scheduel",
+          page: () => RouteSchedule(),
+          binding: scheduelBinding(),
+        ),
+        GetPage(
+          name: "/RouteDisplay",
+          page: () => routeDetails(),
+          binding: UserRouteDisplayBinding(),
+        ),
+        GetPage(
+          name: "/studentForm",
+          page: () => StudentForm(),
+          binding: StudentFormBinding(),
+        ),
+        GetPage(
+          name: "/point",
+          page: () => PointDetail(),
+          binding: Adminpointbinding(),
+        ),
+        GetPage(
+          name: "/pointUpdate",
+
+          page: () => Pointupdateform(
+            P_id: Get.arguments['P_id'],
+            pointNumberPlate: Get.arguments['pointNumberPlate'],
+            r_name: Get.arguments['r_name'],
+            r_id: Get.arguments['r_id'],
+            driverName: Get.arguments['driverName'],
+            driverId: Get.arguments['driverId'],
+            capacity: Get.arguments['capacity'],
+            pickUpTime: Get.arguments['pickUpTime'],
+            dispatchTime: Get.arguments['dispatchTime'],
+            petrolCost: Get.arguments['petrolCost'],
+          ),
+        ),
+      ],
+    );
   }
 }
