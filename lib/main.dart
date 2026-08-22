@@ -2,16 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:point_mangement_system/AuthScreens/signUp.dart';
+import 'package:point_mangement_system/Controller/Admin/PointUpdateController.dart';
 import 'package:point_mangement_system/FormScreens/std_form.dart';
 import 'package:point_mangement_system/UserScreens/userPointRouteDetails.dart';
 
 import 'AdminScreens/driverDetail.dart';
+import 'AdminScreens/financial_dashboard.dart';
 import 'AdminScreens/pointDetails.dart';
 import 'AdminScreens/routeDetails.dart';
 import 'Binding/Admin/AdminDriverBinding.dart';
 import 'Binding/Admin/AdminPointBinding.dart';
 import 'Binding/Admin/AdminRouteBinding.dart';
 import 'Binding/Admin/DriverUpdateBinding.dart';
+import 'Binding/Admin/PointUpdateBinding.dart';
 import 'Binding/Admin/RouteUpdateBinding.dart';
 import 'Binding/User/UserRouteDisplayBinding.dart';
 import 'Binding/User/scheduelBinding.dart';
@@ -46,7 +49,7 @@ class _MyAppState extends State<MyApp> {
           selectionColor: Color.fromRGBO(227, 228, 227, 0.8),
         ),
       ),
-      initialRoute: '/point',
+      initialRoute: '/financialDashBoard',
 
       getPages: [
         GetPage(
@@ -117,7 +120,13 @@ class _MyAppState extends State<MyApp> {
             dispatchTime: Get.arguments['dispatchTime'],
             petrolCost: Get.arguments['petrolCost'],
           ),
+          binding: PointUpdateBinding()
         ),
+
+        GetPage(
+          name: "/financialDashBoard",
+          page: ()=> Financialdashboard()
+        )
       ],
     );
   }
