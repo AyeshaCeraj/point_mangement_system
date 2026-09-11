@@ -14,6 +14,7 @@ import 'Binding/Admin/AdminDriverBinding.dart';
 import 'Binding/Admin/AdminPointBinding.dart';
 import 'Binding/Admin/AdminRouteBinding.dart';
 import 'Binding/Admin/DriverUpdateBinding.dart';
+import 'Binding/Admin/FinancailDashBoardBinding.dart';
 import 'Binding/Admin/PointUpdateBinding.dart';
 import 'Binding/Admin/RouteUpdateBinding.dart';
 import 'Binding/User/UserRouteDisplayBinding.dart';
@@ -125,7 +126,8 @@ class _MyAppState extends State<MyApp> {
 
         GetPage(
           name: "/financialDashBoard",
-          page: ()=> Financialdashboard()
+          page: ()=> Financialdashboard(),
+          binding: Financaildashboardbinding(),
         )
       ],
     );
