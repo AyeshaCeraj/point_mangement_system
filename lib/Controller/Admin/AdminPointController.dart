@@ -21,7 +21,7 @@ class PointDetailController extends GetxController {
 
       isLoading.value = true;
       Response respone = await Dio().get(
-        "http://192.168.1.15/point_mangement_system/getAdminPoint.php",
+        "http://192.168.1.20/point_mangement_system/getAdminPoint.php",
       );
 
       print("STATUS: ${respone.statusCode}");

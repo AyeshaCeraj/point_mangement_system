@@ -10,6 +10,8 @@ import 'AdminScreens/driverDetail.dart';
 import 'AdminScreens/financial_dashboard.dart';
 import 'AdminScreens/pointDetails.dart';
 import 'AdminScreens/routeDetails.dart';
+import 'AdminScreens/student_request_details.dart';
+import 'AdminScreens/student_requests.dart';
 import 'Binding/Admin/AdminDriverBinding.dart';
 import 'Binding/Admin/AdminPointBinding.dart';
 import 'Binding/Admin/AdminRouteBinding.dart';
@@ -42,6 +44,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "Lato",
         textSelectionTheme: TextSelectionThemeData(
@@ -50,7 +53,7 @@ class _MyAppState extends State<MyApp> {
           selectionColor: Color.fromRGBO(227, 228, 227, 0.8),
         ),
       ),
-      initialRoute: '/financialDashBoard',
+      initialRoute: '/studentForm',
 
       getPages: [
         GetPage(
@@ -121,14 +124,21 @@ class _MyAppState extends State<MyApp> {
             dispatchTime: Get.arguments['dispatchTime'],
             petrolCost: Get.arguments['petrolCost'],
           ),
-          binding: PointUpdateBinding()
+          binding: PointUpdateBinding(),
         ),
 
         GetPage(
           name: "/financialDashBoard",
-          page: ()=> Financialdashboard(),
+          page: () => Financialdashboard(),
           binding: Financaildashboardbinding(),
-        )
+        ),
+
+        GetPage(name: "/studentRequestPage", page: () => StudentRequestsPage()),
+
+        GetPage(
+          name: "/StudentRequestDetails",
+          page: () => StudentRequestDetails(),
+        ),
       ],
     );
   }
