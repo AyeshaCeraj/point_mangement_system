@@ -1,27 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+
+import '../Controller/Admin/studentRequestController.dart';
 
 class StudentRequestsPage extends StatelessWidget {
   StudentRequestsPage({super.key});
 
   List<String> status = ["pending", "rejected"];
 
+  final std_requestController = Get.find<StudentRequestController>();
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(title: Text("Student Requests"), centerTitle: true,backgroundColor: Colors.green[900],foregroundColor: Colors.white,),
+      appBar: AppBar(
+        title: Text("Student Requests"),
+        centerTitle: true,
+        backgroundColor: Colors.green[900],
+        foregroundColor: Colors.white,
+      ),
       body: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                var data = status[index % 2];
+          Obx(
+            () {
+              final filterData = std_requestController.studentRequestData
+                  .where(
+                    (student) =>
+                student["status"] == "pending" || student["status"] == "rejected",
+              )
+                  .toList();
 
-                return CardDetails(status: data);
-              },
-            ),
+             return Expanded(
+                child: ListView.builder(
+                  itemCount: filterData.length,
+                  itemBuilder: (context, index) {
+                    var StudentData = filterData[index];
+
+                    var status = StudentData["status"];
+                    var studentName = StudentData["s_name"];
+                    var routeName = StudentData["r_name"];
+
+                    return GestureDetector(
+                      onTap: () =>
+                          Get.toNamed(
+                            '/StudentRequestDetails',
+                            arguments: {
+                              "studentData": StudentData,
+                              "routeName": routeName,
+                            },
+                          ),
+
+                      child: CardDetails(
+                        status: status,
+                        studentName: studentName,
+                        routeName: routeName,
+                      ),
+                    );
+                  },
+                ),
+              );
+
+            }
           ),
           // CardDetails()
         ],
@@ -32,8 +74,15 @@ class StudentRequestsPage extends StatelessWidget {
 
 class CardDetails extends StatelessWidget {
   final String status;
+  final String studentName;
+  final String routeName;
 
-  const CardDetails({super.key, required this.status});
+  const CardDetails({
+    super.key,
+    required this.status,
+    required this.studentName,
+    required this.routeName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +110,7 @@ class CardDetails extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Ayesha Siraj",
+                            studentName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
@@ -85,7 +134,7 @@ class CardDetails extends StatelessWidget {
                           const SizedBox(height: 4),
 
                           Text(
-                            "Qulshan-e-hadeed",
+                            routeName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

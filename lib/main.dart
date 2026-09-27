@@ -19,6 +19,7 @@ import 'Binding/Admin/DriverUpdateBinding.dart';
 import 'Binding/Admin/FinancailDashBoardBinding.dart';
 import 'Binding/Admin/PointUpdateBinding.dart';
 import 'Binding/Admin/RouteUpdateBinding.dart';
+import 'Binding/Admin/studentRequestBinding.dart';
 import 'Binding/User/UserRouteDisplayBinding.dart';
 import 'Binding/User/scheduelBinding.dart';
 import 'Binding/User/studentFormBinding.dart';
@@ -28,6 +29,7 @@ import 'UserScreens/Schedule.dart';
 import 'SplashScreen.dart';
 import '../FormScreens/driverUpdateForm.dart';
 import 'AuthScreens/login.dart';
+import 'UserScreens/pdfUploadPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,7 +55,7 @@ class _MyAppState extends State<MyApp> {
           selectionColor: Color.fromRGBO(227, 228, 227, 0.8),
         ),
       ),
-      initialRoute: '/studentForm',
+      initialRoute: '/studentRequestPage',
 
       getPages: [
         GetPage(
@@ -133,12 +135,16 @@ class _MyAppState extends State<MyApp> {
           binding: Financaildashboardbinding(),
         ),
 
-        GetPage(name: "/studentRequestPage", page: () => StudentRequestsPage()),
+        GetPage(name: "/studentRequestPage", page: () => StudentRequestsPage(),
+        binding: StudentRequestBinding()),
 
         GetPage(
           name: "/StudentRequestDetails",
           page: () => StudentRequestDetails(),
+            binding: StudentRequestBinding()
         ),
+        //tester
+        GetPage(name: "/pdfUploadPagetest", page: () => PdfUploadPage()),
       ],
     );
   }

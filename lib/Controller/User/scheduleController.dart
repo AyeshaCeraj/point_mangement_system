@@ -19,7 +19,7 @@ class ScheduleController extends GetxController {
 
       isLoading.value = true;
       Response response = await Dio().get(
-        "http://192.168.1.12/point_mangement_system/schedule.php",
+        "http://192.168.1.20/point_mangement_system/schedule.php",
       );
       print(response.data.runtimeType);
 

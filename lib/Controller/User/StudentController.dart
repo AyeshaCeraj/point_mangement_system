@@ -2,19 +2,23 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class Studentcontroller extends GetxController {
   RxnString selectedGender = RxnString();
   RxnInt selectedRouteId = RxnInt();
-  Rxn<File> selectedImage = Rxn<File>();
+  RxnInt selectedPointId = RxnInt();
   RxnInt selectedSemester = RxnInt();
-  RxList location = [].obs;
+  RxList<Map<String, dynamic>> location = <Map<String, dynamic>>[].obs;
+  RxList<Map<String, dynamic>> routesDetails = <Map<String, dynamic>>[].obs;
+  RxList<Map<String, dynamic>> pointsDetails = <Map<String, dynamic>>[].obs;
 
+  File? selectedPdf;
+  RxnString fileName = RxnString();
+  RxBool isUploading = false.obs;
 
   List<String> gender = ["Male", "Female", "others"];
   List<int> semester = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -25,6 +29,71 @@ class Studentcontroller extends GetxController {
   TextEditingController cnicController = TextEditingController();
   TextEditingController departmentController = TextEditingController();
   TextEditingController semesterController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  Future<void> pickPdf() async {
+    try {
+      final PlatformFile? file = await FilePicker.pickFile(
+        type: FileType.custom,
+        allowedExtensions: ['pdf'],
+      );
+
+      if (file != null && file.path != null) {
+        selectedPdf = File(file.path!);
+        fileName.value = file.name;
+      }
+      print("PDF is selected ");
+    } catch (e) {
+      print("PDF print error $e");
+    }
+  }
+
+  Future<void> uploadData() async {
+    DateTime dob = DateFormat("dd/MM/yyyy").parse(dateController.text);
+    isUploading.value = true;
+
+    try {
+      final formData = FormData.fromMap({
+        "s_name": nameController.text,
+        "gender": selectedGender.value,
+        "dob": dob,
+        "phone_num": phoneController.text,
+        "cnic": cnicController.text,
+        "address": addressController.text,
+        "department": departmentController.text,
+        "semester": selectedSemester.value,
+        "route_id": selectedRouteId.value,
+        "email": emailController.text,
+        "point_id" : selectedPointId.value,
+        "pdf": await MultipartFile.fromFile(
+          selectedPdf!.path,
+          filename: fileName.value ?? "document.pdf",
+        ),
+      });
+
+      print("Point ID   : ${selectedPointId.value}");
+      final response = await Dio().post(
+        "http://192.168.1.12/point_mangement_system/addStudent.php",
+        data: formData,
+      );
+
+      final data = response.data is String
+          ? jsonDecode(response.data)
+          : response.data;
+
+      print(response.data);
+      print("message ${data["message"]}");
+      if (data["success"] == true) {
+        Get.snackbar("Success", "${data["message"]}");
+      }
+      clear();
+    } catch (e) {
+      print("error $e");
+      isUploading.value = false;
+    } finally {
+      isUploading.value = false;
+    }
+  }
 
   Future<void> pickDate() async {
     DateTime? pickedDate = await showDatePicker(
@@ -37,7 +106,6 @@ class Studentcontroller extends GetxController {
     if (pickedDate != null) {
       dateController.text = DateFormat('dd/MM/yyyy').format(pickedDate!);
       print("Selected Date: ${dateController.text}");
-
     }
   }
 
@@ -54,75 +122,16 @@ class Studentcontroller extends GetxController {
       var result = await Dio().get(
         "http://192.168.1.12/point_mangement_system/getRoute.php",
       );
-      location.addAll(jsonDecode(result.data));
 
-      print(location);
-    } catch (e) {
-      print("error $e");
-    }
-  }
+      final data = jsonDecode(result.data);
 
+      routesDetails.assignAll(List<Map<String, dynamic>>.from(data["route"]));
+      pointsDetails.assignAll(List<Map<String, dynamic>>.from(data["point"]));
+      print(data.runtimeType);
 
-  Future<File?> convertToJpg(File image) async {
-    final ressult = await FlutterImageCompress.compressAndGetFile(
-      image.path,
-      "${image.path}.jpg",
-      format: CompressFormat.jpeg,
-      quality: 80,
-    );
-    return ressult == null ? null : File(ressult.path);
-  }
-
-  Future<void> pickImageFromGallery() async {
-    final returnedImage = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
-    if (returnedImage != null) {
-      selectedImage.value = File(returnedImage.path);
-      print("selescted Image: $selectedImage");
-    } else {
-      print("no image selected");
-    }
-  }
-
-  Future<void> uploadData() async {
-    final jpgImage = await convertToJpg(selectedImage.value!);
-
-    DateTime dob = DateFormat("dd/MM/yyyy").parse(dateController.text);
-
-    if (jpgImage == null) return;
-    try {
-      final formData = FormData.fromMap({
-        "s_name": nameController.text,
-        "gender": selectedGender.value,
-        "dob": dob,
-        "phone_num": phoneController.text,
-        "cnic": cnicController.text,
-        "address": addressController.text,
-        "department": departmentController.text,
-        "semester": selectedSemester.value,
-        "route_id": selectedRouteId.value,
-        "id_card_image": await MultipartFile.fromFile(
-          jpgImage.path,
-          filename: "id_card.jpg",
-        ),
-      });
-
-      final response = await Dio().post(
-        "http://192.168.1.12/point_mangement_system/addStudent.php",
-        data: formData,
-      );
-
-      final data = response.data is String
-          ? jsonDecode(response.data)
-          : response.data;
-
-      print(response.data);
-      print("message ${data["message"]}");
-      if(data["success"] == true){
-        Get.snackbar("Success", "${data["message"]}");
-      }
-      clear();
+      //  print("location $location");
+      print("routesDetails $routesDetails");
+      print("pointDetails $pointsDetails");
     } catch (e) {
       print("error $e");
     }
@@ -135,11 +144,10 @@ class Studentcontroller extends GetxController {
     phoneController.clear();
     addressController.clear();
     departmentController.clear();
-
-    selectedImage.value = null;
+    emailController.clear();
+    fileName.value = null;
     selectedGender.value = null;
     selectedSemester.value = null;
-    selectedRouteId.value =null;
-
+    selectedRouteId.value = null;
   }
 }
