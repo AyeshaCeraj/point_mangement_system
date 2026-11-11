@@ -247,8 +247,8 @@ class StudentRequestDetails extends StatelessWidget {
                       _buildRow(
                         label1: 'Pickup Route',
                         value1: routeName,
-                        label2: 'Drop Out',
-                        value2: 'Smiu',
+                        label2: 'Point',
+                        value2: studentData['number_plate'],
                       ),
                       SizedBox(height: 12),
                     ],

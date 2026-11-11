@@ -14,7 +14,7 @@ class StudentRequestsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+  print("student data here : ${std_requestController.studentRequestData}");
     return Scaffold(
       appBar: AppBar(
         title: Text("Student Requests"),

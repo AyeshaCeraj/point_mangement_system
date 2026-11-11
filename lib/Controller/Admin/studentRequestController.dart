@@ -6,15 +6,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 class StudentRequestController extends GetxController {
   final RxList studentRequestData = [].obs;
+  final RxList acceptedStudentData = [].obs;
 
   void onInit() {
-    getData();
+    getStudentData();
     super.onInit();
   }
 
-  Future<void> getData() async {
+  Future<void> getStudentData() async {
     Response response = await Dio().get(
-      "http://192.168.1.8/point_mangement_system/getStudentRequest.php",
+      "http://192.168.1.12/point_mangement_system/getStudentRequest.php",
     );
 
     //  print("response : $response");
@@ -22,6 +23,13 @@ class StudentRequestController extends GetxController {
     final data = jsonDecode(response.data);
 
     studentRequestData.assignAll(data);
+        // Filter only accepted students
+        final acceptedStudents = data.where((student) {
+          return student['status'] == 'accepted';
+        }).toList();
+
+        // Store accepted students
+        acceptedStudentData.assignAll(acceptedStudents);
 
     print("studentRequestData $studentRequestData");
   }
@@ -31,7 +39,7 @@ class StudentRequestController extends GetxController {
     final pdfPath = studentData["id_card_file_path"];
 
     final pdfUrl =
-        "http://192.168.1.8/point_mangement_system/$pdfPath";
+        "http://192.168.1.12/point_mangement_system/$pdfPath";
 
     final uri = Uri.parse(pdfUrl);
 
@@ -54,7 +62,7 @@ class StudentRequestController extends GetxController {
     print("this is sid $id");
     try {
       Response response = await Dio().post(
-        "http://192.168.1.8/point_mangement_system/UpdateStudentStatus.php",
+        "http://192.168.1.12/point_mangement_system/UpdateStudentStatus.php",
         data: {
           "id": id,
           "status" : status
@@ -67,7 +75,7 @@ class StudentRequestController extends GetxController {
       final data = response.data;
 
       if (data == "success") {
-        getData();
+        getStudentData();
         Get.back();
         print("Student Accepted");
 

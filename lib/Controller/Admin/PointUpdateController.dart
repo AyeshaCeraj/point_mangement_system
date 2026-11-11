@@ -23,7 +23,7 @@ class PointUpdateController extends GetxController {
   Future<void> getRoute() async {
     try {
       var result = await Dio().get(
-        "http://192.168.1.15/point_mangement_system/getRoute.php",
+        "http://192.168.1.12/point_mangement_system/getRoute.php",
       );
       PointData.addAll(jsonDecode(result.data));
 

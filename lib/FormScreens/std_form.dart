@@ -525,10 +525,8 @@ class _StudentFormState extends State<StudentForm> {
                                   Get.snackbar("Error", "Please select point");
                                   return;
                                 }
-                                if (std_controller
-                                    .selectedGender
-                                    .value!
-                                    .isEmpty) {
+                                if (std_controller.selectedGender.value == null ||
+                                    std_controller.selectedGender.value!.isEmpty) {
                                   Get.snackbar("Error", "Please select gender");
                                   return;
                                 }
@@ -548,7 +546,10 @@ class _StudentFormState extends State<StudentForm> {
 
                                 await std_controller.uploadData();
 
-                                _formKey.currentState!.reset();
+
+                                if (mounted) {
+                                  _formKey.currentState?.reset();
+                                }
                               }
                             },
                             style: ElevatedButton.styleFrom(

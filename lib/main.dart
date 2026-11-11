@@ -6,10 +6,12 @@ import 'package:point_mangement_system/Controller/Admin/PointUpdateController.da
 import 'package:point_mangement_system/FormScreens/std_form.dart';
 import 'package:point_mangement_system/UserScreens/userPointRouteDetails.dart';
 
+import 'AdminScreens/AdminDashBoard.dart';
 import 'AdminScreens/driverDetail.dart';
 import 'AdminScreens/financial_dashboard.dart';
 import 'AdminScreens/pointDetails.dart';
 import 'AdminScreens/routeDetails.dart';
+import 'AdminScreens/studentDeletePage.dart';
 import 'AdminScreens/student_request_details.dart';
 import 'AdminScreens/student_requests.dart';
 import 'Binding/Admin/AdminDriverBinding.dart';
@@ -19,6 +21,7 @@ import 'Binding/Admin/DriverUpdateBinding.dart';
 import 'Binding/Admin/FinancailDashBoardBinding.dart';
 import 'Binding/Admin/PointUpdateBinding.dart';
 import 'Binding/Admin/RouteUpdateBinding.dart';
+import 'Binding/Admin/studentDeleteBinding.dart';
 import 'Binding/Admin/studentRequestBinding.dart';
 import 'Binding/User/UserRouteDisplayBinding.dart';
 import 'Binding/User/scheduelBinding.dart';
@@ -30,9 +33,10 @@ import 'SplashScreen.dart';
 import '../FormScreens/driverUpdateForm.dart';
 import 'AuthScreens/login.dart';
 import 'UserScreens/pdfUploadPage.dart';
+import 'emailChecker.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApp()); //student delete functionality ( delete page  + delete controller)
 }
 
 class MyApp extends StatefulWidget {
@@ -55,7 +59,7 @@ class _MyAppState extends State<MyApp> {
           selectionColor: Color.fromRGBO(227, 228, 227, 0.8),
         ),
       ),
-      initialRoute: '/studentRequestPage',
+      initialRoute: '/StudentDeletePage',
 
       getPages: [
         GetPage(
@@ -143,9 +147,17 @@ class _MyAppState extends State<MyApp> {
           page: () => StudentRequestDetails(),
             binding: StudentRequestBinding()
         ),
+
+        GetPage(
+            name: "/StudentDeletePage",
+            page: () => StudentPage(),
+            binding: StudentDeleteBinding()
+        ),
         //tester
         GetPage(name: "/pdfUploadPagetest", page: () => PdfUploadPage()),
+        GetPage(name: "/Admindashboard", page: () => AdminDashboard()),
       ],
     );
   }
 }
+
