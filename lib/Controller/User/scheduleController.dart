@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:point_mangement_system/api_config.dart';
 
 class ScheduleController extends GetxController {
   final RxList<Map<String, dynamic>> schedule =
@@ -19,7 +20,7 @@ class ScheduleController extends GetxController {
 
       isLoading.value = true;
       Response response = await Dio().get(
-        "http://192.168.1.20/point_mangement_system/schedule.php",
+        "${ApiConfig.apiUrl}/schedule.php",
       );
       print(response.data.runtimeType);
 

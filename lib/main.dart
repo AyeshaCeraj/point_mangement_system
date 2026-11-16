@@ -33,10 +33,11 @@ import 'SplashScreen.dart';
 import '../FormScreens/driverUpdateForm.dart';
 import 'AuthScreens/login.dart';
 import 'UserScreens/pdfUploadPage.dart';
+import 'UserScreens/userDashBoard.dart';
 import 'emailChecker.dart';
 
 void main() {
-  runApp(const MyApp()); //student delete functionality ( delete page  + delete controller)
+  runApp(const MyApp()); //scheduel not display all routes correctly
 }
 
 class MyApp extends StatefulWidget {
@@ -59,9 +60,11 @@ class _MyAppState extends State<MyApp> {
           selectionColor: Color.fromRGBO(227, 228, 227, 0.8),
         ),
       ),
-      initialRoute: '/StudentDeletePage',
+      initialRoute: '/UserDashBoard',
 
       getPages: [
+
+//done
         GetPage(
           name: '/driver',
           page: () => Driverdetail(),
@@ -80,11 +83,15 @@ class _MyAppState extends State<MyApp> {
           ),
           binding: driverUpdateBinding(),
         ),
+
+        //done
         GetPage(
           name: '/AdminRoute',
           page: () => AdminRoutedetail(),
           binding: AdminRouteBinding(),
         ),
+
+        //done
         GetPage(
           name: "/RouteUpdate",
           page: () => RouteUpdateForm(
@@ -95,26 +102,35 @@ class _MyAppState extends State<MyApp> {
           ),
           binding: RouteUpdateBinding(),
         ),
+
+        //done
         GetPage(
           name: "/scheduel",
           page: () => RouteSchedule(),
           binding: scheduelBinding(),
         ),
+
+        //done
         GetPage(
           name: "/RouteDisplay",
           page: () => routeDetails(),
           binding: UserRouteDisplayBinding(),
         ),
+
+        //done
         GetPage(
           name: "/studentForm",
           page: () => StudentForm(),
           binding: StudentFormBinding(),
         ),
+
+        //done
         GetPage(
-          name: "/point",
+          name: "/adminPoint",
           page: () => PointDetail(),
           binding: Adminpointbinding(),
         ),
+//done
         GetPage(
           name: "/pointUpdate",
 
@@ -132,13 +148,13 @@ class _MyAppState extends State<MyApp> {
           ),
           binding: PointUpdateBinding(),
         ),
-
+//done
         GetPage(
           name: "/financialDashBoard",
           page: () => Financialdashboard(),
           binding: Financaildashboardbinding(),
         ),
-
+//done
         GetPage(name: "/studentRequestPage", page: () => StudentRequestsPage(),
         binding: StudentRequestBinding()),
 
@@ -147,7 +163,7 @@ class _MyAppState extends State<MyApp> {
           page: () => StudentRequestDetails(),
             binding: StudentRequestBinding()
         ),
-
+//done
         GetPage(
             name: "/StudentDeletePage",
             page: () => StudentPage(),
@@ -156,6 +172,7 @@ class _MyAppState extends State<MyApp> {
         //tester
         GetPage(name: "/pdfUploadPagetest", page: () => PdfUploadPage()),
         GetPage(name: "/Admindashboard", page: () => AdminDashboard()),
+        GetPage(name: "/UserDashBoard", page: () => UserDashboard()),
       ],
     );
   }

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:point_mangement_system/api_config.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
 
@@ -21,7 +21,7 @@ class PointDetailController extends GetxController {
 
       isLoading.value = true;
       Response respone = await Dio().get(
-        "http://192.168.1.12/point_mangement_system/getAdminPoint.php",
+        "${ApiConfig.apiUrl}/getAdminPoint.php",
       );
 
       print("STATUS: ${respone.statusCode}");

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:point_mangement_system/api_config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
@@ -23,7 +23,7 @@ class PointUpdateController extends GetxController {
   Future<void> getRoute() async {
     try {
       var result = await Dio().get(
-        "http://192.168.1.12/point_mangement_system/getRoute.php",
+        "${ApiConfig.apiUrl}/getRoute.php",
       );
       PointData.addAll(jsonDecode(result.data));
 
@@ -49,7 +49,7 @@ class PointUpdateController extends GetxController {
       isLoading.value = true;
 
       Response response = await Dio().put(
-        "http://192.168.1.15/point_mangement_system/pointUpdate.php",
+        "${ApiConfig.apiUrl}/pointUpdate.php",
         data: data,
       );
 

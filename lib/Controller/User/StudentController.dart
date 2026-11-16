@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:point_mangement_system/api_config.dart';
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
@@ -73,7 +74,7 @@ class Studentcontroller extends GetxController {
 
       print("Point ID   : ${selectedPointId.value}");
       final response = await Dio().post(
-        "http://192.168.1.12/point_mangement_system/addStudent.php",
+        "${ApiConfig.apiUrl}/addStudent.php",
         data: formData,
       );
 
@@ -120,7 +121,7 @@ class Studentcontroller extends GetxController {
   Future<void> getRoute() async {
     try {
       var result = await Dio().get(
-        "http://192.168.1.12/point_mangement_system/getRoute.php",
+        "${ApiConfig.apiUrl}/getRoute.php",
       );
 
       final data = jsonDecode(result.data);

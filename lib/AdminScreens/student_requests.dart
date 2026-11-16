@@ -14,7 +14,7 @@ class StudentRequestsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  print("student data here : ${std_requestController.studentRequestData}");
+    print("student data here : ${std_requestController.studentRequestData}");
     return Scaffold(
       appBar: AppBar(
         title: Text("Student Requests"),
@@ -24,28 +24,51 @@ class StudentRequestsPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Obx(
-            () {
-              final filterData = std_requestController.studentRequestData
-                  .where(
-                    (student) =>
-                student["status"] == "pending" || student["status"] == "rejected",
-              )
-                  .toList();
+          Obx(() {
+            final filterData = std_requestController.studentRequestData
+                .where(
+                  (student) =>
+                      student["status"] == "pending" ||
+                      student["status"] == "rejected",
+                )
+                .toList();
 
-             return Expanded(
-                child: ListView.builder(
-                  itemCount: filterData.length,
-                  itemBuilder: (context, index) {
-                    var StudentData = filterData[index];
+            return filterData.isEmpty
+                ? Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.inbox_rounded,
+                            size: 65,
+                            color: Colors.grey.shade400,
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            "No student requests are pending",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: filterData.length,
+                      itemBuilder: (context, index) {
+                        var StudentData = filterData[index];
 
-                    var status = StudentData["status"];
-                    var studentName = StudentData["s_name"];
-                    var routeName = StudentData["r_name"];
+                        var status = StudentData["status"];
+                        var studentName = StudentData["s_name"];
+                        var routeName = StudentData["r_name"];
 
-                    return GestureDetector(
-                      onTap: () =>
-                          Get.toNamed(
+                        return GestureDetector(
+                          onTap: () => Get.toNamed(
                             '/StudentRequestDetails',
                             arguments: {
                               "studentData": StudentData,
@@ -53,18 +76,16 @@ class StudentRequestsPage extends StatelessWidget {
                             },
                           ),
 
-                      child: CardDetails(
-                        status: status,
-                        studentName: studentName,
-                        routeName: routeName,
-                      ),
-                    );
-                  },
-                ),
-              );
-
-            }
-          ),
+                          child: CardDetails(
+                            status: status,
+                            studentName: studentName,
+                            routeName: routeName,
+                          ),
+                        );
+                      },
+                    ),
+                  );
+          }),
           // CardDetails()
         ],
       ),

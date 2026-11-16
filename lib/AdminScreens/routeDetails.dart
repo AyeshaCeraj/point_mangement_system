@@ -308,7 +308,7 @@ class RouteCardDetails extends StatelessWidget {
                       TextButton(
                         onPressed: () async {
                           final result = await Get.toNamed(
-                            "/AdminUpdate",
+                            "/RouteUpdate",
                             arguments: {
                               'name': route_name,
                               'fees': fees,

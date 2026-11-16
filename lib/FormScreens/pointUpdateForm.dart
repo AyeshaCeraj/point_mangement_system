@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../Controller/Admin/AdminPointController.dart';
 import '../Controller/Admin/PointUpdateController.dart';
-import '../Controller/Admin/driverUpdateController.dart';
-import '../Controller/User/routeDetailController.dart';
+
 
 class Pointupdateform extends StatefulWidget {
   final int P_id;
@@ -39,7 +37,7 @@ class Pointupdateform extends StatefulWidget {
 
 class _PointupdateformState extends State<Pointupdateform> {
   final _formKey = GlobalKey<FormState>();
-  final pointUpdateController = Get.find();
+  final pointUpdateController = Get.find<PointUpdateController>();
 
   @override
   void initState() {

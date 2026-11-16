@@ -220,26 +220,29 @@ class _FinancialdashboardState extends State<Financialdashboard> {
 
                 SizedBox(height: 30),
 
-                TableData(
-                  title: 'Driver Salary',
-                  subTitle: 'Totals of Driver Salary',
-                  icon: Icons.attach_money,
-                  heading_1: "Driver Name",
-                  heading_2: "One Month Salary",
-                  heading_3: "Six Month Salary",
-                  tableData: financialDashBoardController.salaryData,
-                ),
+                Obx(() {
+                  return TableData(
+                    title: 'Driver Salary',
+                    subTitle: 'Totals of Driver Salary',
+                    icon: Icons.attach_money,
+                    heading_1: "Driver Name",
+                    heading_2: "One Month Salary",
+                    heading_3: "Six Month Salary",
+                    tableData: financialDashBoardController.salaryData.toList(),
+                  );
+                }),
                 SizedBox(height: 10),
-
-                TableData(
-                  title: 'Petrol Cost',
-                  subTitle: 'Total Petrol Cost of All Point',
-                  icon: Icons.local_gas_station_outlined,
-                  heading_1: "Route Name",
-                  heading_2: "One Month Petrol Cost",
-                  heading_3: "Six Month Petrol Cost",
-                  tableData: financialDashBoardController.petrolData,
-                ),
+                Obx(() {
+                  return TableData(
+                    title: 'Petrol Cost',
+                    subTitle: 'Total Petrol Cost of All Point',
+                    icon: Icons.local_gas_station_outlined,
+                    heading_1: "Route Name",
+                    heading_2: "One Month Petrol Cost",
+                    heading_3: "Six Month Petrol Cost",
+                    tableData: financialDashBoardController.petrolData.toList(),
+                  );
+                }),
                 SizedBox(height: 10),
 
                 Container(
@@ -272,13 +275,20 @@ class _FinancialdashboardState extends State<Financialdashboard> {
                           SizedBox(height: 4),
                           Obx(
                             () => Text(
-                              financialDashBoardController.profit.value.toString(),
+                              financialDashBoardController.profit.value
+                                  .toString(),
 
                               style: TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
-                                color:financialDashBoardController.profit.value.isNegative? Colors.red : Colors.green[500],
+                                color:
+                                    financialDashBoardController
+                                        .profit
+                                        .value
+                                        .isNegative
+                                    ? Colors.red
+                                    : Colors.green[500],
                               ),
                             ),
                           ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:point_mangement_system/api_config.dart';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
@@ -15,10 +16,9 @@ class StudentRequestController extends GetxController {
 
   Future<void> getStudentData() async {
     Response response = await Dio().get(
-      "http://192.168.1.12/point_mangement_system/getStudentRequest.php",
+      "${ApiConfig.apiUrl}/getStudentRequest.php",
     );
 
-    //  print("response : $response");
 
     final data = jsonDecode(response.data);
 
@@ -39,7 +39,7 @@ class StudentRequestController extends GetxController {
     final pdfPath = studentData["id_card_file_path"];
 
     final pdfUrl =
-        "http://192.168.1.12/point_mangement_system/$pdfPath";
+        "${ApiConfig.apiUrl}/$pdfPath";
 
     final uri = Uri.parse(pdfUrl);
 
@@ -62,7 +62,7 @@ class StudentRequestController extends GetxController {
     print("this is sid $id");
     try {
       Response response = await Dio().post(
-        "http://192.168.1.12/point_mangement_system/UpdateStudentStatus.php",
+        "${ApiConfig.apiUrl}/UpdateStudentStatus.php",
         data: {
           "id": id,
           "status" : status

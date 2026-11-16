@@ -1,40 +1,59 @@
-
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:point_mangement_system/Controller/Admin/studentRequestController.dart';
+import 'package:point_mangement_system/api_config.dart';
 
 class StudentDeleteController extends GetxController {
+  RxBool isloading = false.obs;
 
-  //final RxList studentData = [].obs;
+  final Dio dio = Dio();
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   getStudentData();
-  // }
-  //
-  // Future<void> getStudentData() async {
-  //   try {
-  //     Response response = await Dio().get(
-  //       "http://192.168.1.12/point_mangement_system/getStudentRequest.php",
-  //     );
-  //
-  //     final data = jsonDecode(response.data);
-  //
-  //     // Filter only accepted students
-  //     final acceptedStudents = data.where((student) {
-  //       return student['status'] == 'accepted';
-  //     }).toList();
-  //
-  //     // Store accepted students
-  //     studentData.assignAll(acceptedStudents);
-  //
-  //    // print("Accepted Students: ${studentData.length}");
-  //    // print("Student Data: $studentData");
-  //
-  //   } catch (e) {
-  //     print("Error fetching students: $e");
-  //   }
-  // }
+  final StudentRequestController studentRequestController =
+      Get.find<StudentRequestController>();
+
+  Future<bool> deleteStudent({required int id}) async {
+    try {
+      isloading.value = true;
+
+      Response response = await dio.delete(
+        '${ApiConfig.apiUrl}/deleteStudent.php',
+        data: {'id': id},
+      );
+
+      if (response.statusCode == 200) {
+        final data = response.data is String
+            ? jsonDecode(response.data)
+            : response.data;
+
+        if (data['success'] == true) {
+          studentRequestController.studentRequestData.removeWhere(
+            (student) => student['s_id'] == id,
+          );
+          studentRequestController.acceptedStudentData.removeWhere(
+            (student) => student['s_id'] == id,
+          );
+          isloading.value = false;
+          Get.snackbar(
+            "Success",
+            "Student removed from list",
+            snackPosition: SnackPosition.BOTTOM,
+          );
+          return true;
+        }
+      }
+      isloading.value = false;
+
+      return false;
+    } catch (e) {
+      print('Delete Student Error: $e');
+      isloading.value = false;
+
+      return false;
+    } finally {
+      isloading.value = false;
+    }
+  }
 }

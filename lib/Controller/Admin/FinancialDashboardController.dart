@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:point_mangement_system/api_config.dart';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class FinancialDashBoardController extends GetxController {
     try {
       isLoading.value = true;
       Response respone = await Dio().get(
-        "http://192.168.1.12/point_mangement_system/financialDashboard.php",
+        "${ApiConfig.apiUrl}/financialDashboard.php",
       );
       print(respone.data.runtimeType);
       final data = jsonDecode(respone.data);

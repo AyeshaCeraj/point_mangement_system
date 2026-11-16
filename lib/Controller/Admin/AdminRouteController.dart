@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:point_mangement_system/api_config.dart';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
@@ -19,7 +20,7 @@ class Adminroutecontroller extends GetxController {
 
       isLoading.value = true;
       Response respone = await Dio().get(
-        "http://192.168.1.12/point_mangement_system/getAdminRouteDetails.php",
+        "${ApiConfig.apiUrl}/getAdminRouteDetails.php",
       );
       print(respone.data.runtimeType);
       List data = jsonDecode(respone.data);

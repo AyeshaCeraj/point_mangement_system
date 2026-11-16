@@ -17,10 +17,10 @@ class _StudentPageState extends State<StudentPage> {
   final TextEditingController searchController = TextEditingController();
 
   final StudentRequestController studentRequestController =
-  Get.find<StudentRequestController>();
+      Get.find<StudentRequestController>();
 
   final StudentDeleteController studentDeleteController =
-  Get.find<StudentDeleteController>();
+      Get.find<StudentDeleteController>();
 
   String searchQuery = '';
 
@@ -73,17 +73,12 @@ class _StudentPageState extends State<StudentPage> {
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
               ),
-              onPressed: () {
-                studentRequestController.acceptedStudentData.removeWhere(
-                  (item) =>
-                      item['s_id'].toString() == student['s_id'].toString(),
-                );
+              onPressed: () async{
+                await studentDeleteController.deleteStudent(id: student["s_id"]);
 
                 Navigator.pop(dialogContext);
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Student removed from list')),
-                );
+
               },
               child: const Text('Delete'),
             ),
@@ -101,7 +96,7 @@ class _StudentPageState extends State<StudentPage> {
 
   @override
   Widget build(BuildContext context) {
-   // print("studentDeleteController ${studentRequestController.acceptedStudentData}");
+    // print("studentDeleteController ${studentRequestController.acceptedStudentData}");
     return Scaffold(
       backgroundColor: const Color(0xFFF5F8F5),
 
@@ -281,6 +276,7 @@ class _StudentPageState extends State<StudentPage> {
 
                   itemBuilder: (context, index) {
                     final student = studentList[index];
+
 
                     return Card(
                       color: Colors.white,

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
-
+import 'package:point_mangement_system/api_config.dart';
 class Driverupdatecontroller extends GetxController {
   TextEditingController cnic_controller = TextEditingController();
   TextEditingController name_controller = TextEditingController();
@@ -25,7 +25,7 @@ class Driverupdatecontroller extends GetxController {
     try{
       isLoading.value =true;
      Response response =  await Dio().put(
-        'http://192.168.1.12/point_mangement_system/driverUpdate.php',
+        '${ApiConfig.apiUrl}//driverUpdate.php',
         data: data,
       );
      print("STATUS: ${response.statusCode}");
